@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-Anthropogenic climate change is an undeniable issue in today’s society,
+    Anthropogenic climate change is an undeniable issue in today’s society,
 altering Earth’s landscape. One of these impacts is rising sea levels: as global
 warming causes Earth’s oceans to expand, they may damage coastal infras-
 tructure and force people to relocate, among other consequences. Previous
@@ -22,5 +22,13 @@ cation due to sea-level rise.
 
 # Introduction
 
-# Methods
-#### Temperature
+# Methodology
+#### Initial Surface Air Temperature (TAS) Data Collection
+#### Generating Regional Sea Level Rise (RSLR) Data
+#### Modeling Economic Costs Using RSLR Data 
+
+# Results
+
+# Conclusion
+
+# Appendix
