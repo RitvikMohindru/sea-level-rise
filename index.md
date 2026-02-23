@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 ---
 Anthropogenic climate change is an undeniable issue in today’s society,
 altering Earth’s landscape. One of these impacts is rising sea levels: as global
