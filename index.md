@@ -28,7 +28,11 @@ cation due to sea-level rise.
 #### Modeling Economic Costs Using RSLR Data 
 
 # Results
+#### Data Visualization 1
+#### Data Visualization 2
 
 # Conclusion
+
+# Discussion
 
 # Appendix
