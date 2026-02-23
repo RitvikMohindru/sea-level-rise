@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-    Anthropogenic climate change is an undeniable issue in today’s society,
+Anthropogenic climate change is an undeniable issue in today’s society,
 altering Earth’s landscape. One of these impacts is rising sea levels: as global
 warming causes Earth’s oceans to expand, they may damage coastal infras-
 tructure and force people to relocate, among other consequences. Previous
