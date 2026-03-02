@@ -1,0 +1,12 @@
+- name: Home
+  link: /
+- name: Introduction
+  link: /introduction/
+- name: Methodology
+  link: /methodology/
+- name: Results
+  link: /results/
+- name: Discussion
+  link: /discussion/
+- name: Appendix
+  link: /appendix/
