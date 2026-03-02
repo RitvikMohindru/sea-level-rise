@@ -1,60 +1,101 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-us">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    <!-- Keep the Slate theme styling -->
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <title>
+      {% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}
+    </title>
+
+    <!-- Slate theme CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}"
+    />
+
     <style>
-      /* simple navbar styling that plays nice with Slate */
-      .site-nav { border-bottom: 1px solid rgba(0,0,0,.1); margin-bottom: 1.5rem; }
-      .nav-inner { max-width: 980px; margin: 0 auto; padding: .8rem 1rem; display: flex; gap: 1rem; align-items: center; justify-content: space-between; }
-      .site-title { font-weight: 700; text-decoration: none; }
-      .nav-links { display: flex; flex-wrap: wrap; gap: .75rem; }
-      .nav-links a { text-decoration: none; padding: .25rem .4rem; border-radius: .35rem; }
-      .nav-links a.active { background: rgba(0,0,0,.08); }
-      .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 1rem 2rem; }
-      html {
-        scroll-behavior: smooth;
-        }
+      /* Smooth scroll + stop headings being hidden under sticky nav */
+      html { scroll-behavior: smooth; }
+      h1, h2, h3, h4 { scroll-margin-top: 90px; }
 
-        .scroll-nav {
+      /* Sticky in-page nav */
+      .scroll-nav {
         position: sticky;
         top: 0;
-        background: white;
-        padding: 10px 0;
-        display: flex;
-        gap: 20px;
-        border-bottom: 1px solid #ddd;
-        z-index: 1000;
-        }
+        z-index: 999;
+        background: #ffffff;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+      }
 
-        .scroll-nav a {
+      .scroll-nav .inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .scroll-nav a {
         text-decoration: none;
         font-weight: 600;
-        }
+        padding: 6px 10px;
+        border-radius: 10px;
+        color: #0366d6;
+      }
 
-        .scroll-nav a:hover {
-        opacity: 0.7;
-        }
+      .scroll-nav a:hover {
+        background: rgba(3, 102, 214, 0.08);
+      }
+
+      /* Make the main content look like a readable “paper” */
+      #main_content {
+        background: #fff;
+        border-radius: 14px;
+        padding: 26px 26px;
+        box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+
+      /* Give breathing room from the header */
+      section { padding-top: 18px; }
+
+      /* Mobile tweaks */
+      @media (max-width: 700px) {
+        #main_content { padding: 18px; }
+        .scroll-nav a { padding: 6px 8px; }
+      }
     </style>
   </head>
 
   <body>
+    <!-- Slate theme header structure -->
+    <header>
+      <div class="inner">
+        <h1>{{ site.title }}</h1>
+        {% if site.description %}
+          <h2>{{ site.description }}</h2>
+        {% endif %}
+      </div>
+    </header>
 
-    <nav class="scroll-nav">
-      <a href="#introduction">Introduction</a>
-      <a href="#methodology">Methodology</a>
-      <a href="#results">Results</a>
-      <a href="#conclusion">Conclusion</a>
-      <a href="#discussion">Discussion</a>
-    </nav>
-  
-    <main>
-      {{ content }}
-    </main>
-  
+    <!-- Your one-page scroll nav -->
+    <div class="scroll-nav">
+      <div class="inner">
+        <a href="#introduction">Introduction</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#results">Results</a>
+        <a href="#conclusion">Conclusion</a>
+        <a href="#discussion">Discussion</a>
+      </div>
+    </div>
+
+    <!-- Slate theme main content wrapper -->
+    <section>
+      <div class="inner" id="main_content">
+        {{ content }}
+      </div>
+    </section>
   </body>
 </html>
