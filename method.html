@@ -8,35 +8,6 @@
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
-        .page-hero {
-            padding: 48px 40px 36px;
-            border-bottom: 1px solid rgba(35, 54, 66, 0.08);
-            background: linear-gradient(135deg, rgba(44, 111, 106, 0.06), rgba(111, 73, 134, 0.06));
-        }
-        .page-hero-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-        .page-hero h1 {
-            font-size: 34px;
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            max-width: 720px;
-        }
-        .page-hero p {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.8;
-            max-width: 680px;
-        }
-
         .page-body {
             padding: 40px 40px 56px;
             display: grid;
@@ -325,8 +296,8 @@
         }
 
         @media (max-width: 768px) {
-            .page-hero { padding: 32px 20px 28px; }
-            .page-hero h1 { font-size: 24px; }
+            .hero { padding: 32px 20px 28px; }
+            .hero h1 { font-size: 24px; }
             .page-body { padding: 28px 20px 40px; gap: 40px; }
             .chart-grid { grid-template-columns: 1fr; }
             .chart-card.full-width { grid-column: auto; }
@@ -410,8 +381,8 @@
         <div class="app">
 
             <!-- ── HERO ── -->
-            <div class="page-hero">
-                <div class="page-hero-label">HDSI Senior Capstone · Group B05-1</div>
+            <div class="hero">
+                <div class="hero-label">HDSI Senior Capstone · Group B05-1</div>
                 <h1>Data &amp; Methodology</h1>
                 <p>A walkthrough of the datasets used to model sea level rise, and the analytical pipeline we built to translate physical projections into economic damage estimates.</p>
             </div>

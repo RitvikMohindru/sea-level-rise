@@ -7,37 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <style>
-        .about-hero {
-            padding: 48px 40px 32px;
-            border-bottom: 1px solid rgba(35, 54, 66, 0.08);
-            background: linear-gradient(135deg, rgba(44, 111, 106, 0.06), rgba(111, 73, 134, 0.06));
-        }
-
-        .about-hero-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-
-        .about-hero h1 {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .about-hero p {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 640px;
-        }
-
         .about-body {
             padding: 36px 40px 48px;
             display: grid;
@@ -102,8 +71,8 @@
         .team-role { font-size: 14px; color: var(--muted); line-height: 1.5; }
 
         @media (max-width: 768px) {
-            .about-hero { padding: 32px 20px 24px; }
-            .about-hero h1 { font-size: 24px; }
+            .hero { padding: 32px 20px 24px; }
+            .hero h1 { font-size: 24px; }
             .about-body { padding: 24px 20px 36px; }
             .team-grid { grid-template-columns: 1fr; }
             .team-card { padding: 32px 24px; }
@@ -186,8 +155,8 @@
     <div class="page">
         <div class="app">
 
-            <div class="about-hero">
-                <div class="about-hero-label">HDSI Senior Capstone · Group B05-1</div>
+            <div class="hero">
+                <div class="hero-label">HDSI Senior Capstone · Group B05-1</div>
                 <h1>Quantifying the Economic Impacts of Sea Level Rise</h1>
                 <p>
                     This project estimates how rising sea levels translate into measurable economic consequences for the world at-large.
