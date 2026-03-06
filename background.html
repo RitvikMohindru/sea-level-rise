@@ -76,47 +76,6 @@
         .stat-value.accent { color: var(--accent); }
         .stat-value.purple { color: var(--accent-2); }
 
-        /* Chart cards */
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .chart-card {
-            background: #fff;
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            border: 1px solid rgba(35, 54, 66, 0.08);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-
-        .chart-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .chart-card-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .chart-card-sub {
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 20px;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 240px;
-        }
-
-        .chart-container.tall {
-            height: 300px;
-        }
-
         /* Callout block */
         .callout {
             background: linear-gradient(135deg, rgba(44, 111, 106, 0.08), rgba(111, 73, 134, 0.08));
@@ -157,16 +116,6 @@
             font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .hero { padding: 32px 20px 28px; }
-            .hero h1 { font-size: 24px; }
-            .page-body { padding: 28px 20px 40px; gap: 36px; }
-            .stat-row { grid-template-columns: 1fr; }
-            .chart-grid { grid-template-columns: 1fr; }
-            .chart-card.full-width { grid-column: auto; }
-            .banner-image, .banner-placeholder { height: 180px; }
         }
     </style>
 </head>
@@ -247,7 +196,6 @@
 
             <!-- Hero -->
             <div class="hero">
-                <div class="hero-label">HDSI Senior Capstone · Group B05-1</div>
                 <h1>Quantifying the Economic Impacts of Sea Level Rise</h1>
             </div>
 
