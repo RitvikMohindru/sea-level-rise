@@ -3,238 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction — Quantifying the Economic Impacts of Sea Level Rise</title>
+    <title>Card Connect</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-    <style>
-        .intro-hero {
-            padding: 48px 40px 36px;
-            border-bottom: 1px solid rgba(35, 54, 66, 0.08);
-            background: linear-gradient(135deg, rgba(44, 111, 106, 0.06), rgba(111, 73, 134, 0.06));
-        }
-
-        .intro-hero-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-
-        .intro-hero h1 {
-            font-size: 34px;
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            max-width: 720px;
-        }
-
-        .intro-hero p {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.8;
-            max-width: 680px;
-        }
-
-        .intro-meta {
-            display: flex;
-            gap: 24px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .meta-chip {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #fff;
-            border: 1px solid rgba(35, 54, 66, 0.1);
-            border-radius: 999px;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--muted);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .meta-chip-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2c6f6a, #6f4986);
-        }
-
-        .intro-body {
-            padding: 40px 40px 56px;
-            display: grid;
-            gap: 48px;
-        }
-
-        .section-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 14px;
-            letter-spacing: -0.3px;
-        }
-
-        .prose {
-            font-size: 15px;
-            color: var(--muted);
-            line-height: 1.85;
-            max-width: 780px;
-        }
-
-        .prose p + p {
-            margin-top: 14px;
-        }
-
-        /* Stat row */
-        .stat-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .stat-card {
-            background: #fff;
-            border-radius: var(--radius-md);
-            padding: 20px 24px;
-            border: 1px solid rgba(35, 54, 66, 0.08);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-
-        .stat-label {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-
-        .stat-note {
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: 4px;
-        }
-
-        .stat-value.accent { color: var(--accent); }
-        .stat-value.purple { color: var(--accent-2); }
-
-        /* Chart cards */
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .chart-card {
-            background: #fff;
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            border: 1px solid rgba(35, 54, 66, 0.08);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-
-        .chart-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .chart-card-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .chart-card-sub {
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 20px;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 240px;
-        }
-
-        .chart-container.tall {
-            height: 300px;
-        }
-
-        /* Callout block */
-        .callout {
-            background: linear-gradient(135deg, rgba(44, 111, 106, 0.08), rgba(111, 73, 134, 0.08));
-            border-left: 4px solid var(--accent);
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            padding: 20px 24px;
-        }
-
-        .callout p {
-            font-size: 15px;
-            color: var(--text);
-            line-height: 1.7;
-            font-style: italic;
-        }
-
-        /* Banner image */
-        .banner-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: var(--radius-md);
-            display: block;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-        }
-
-        /* Placeholder shown when no real image is set */
-        .banner-placeholder {
-            width: 100%;
-            height: 280px;
-            border-radius: var(--radius-md);
-            background: linear-gradient(135deg, #2c6f6a 0%, #4a7f7a 40%, #6f4986 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .intro-hero { padding: 32px 20px 28px; }
-            .intro-hero h1 { font-size: 24px; }
-            .intro-body { padding: 28px 20px 40px; gap: 36px; }
-            .stat-row { grid-template-columns: 1fr; }
-            .chart-grid { grid-template-columns: 1fr; }
-            .chart-card.full-width { grid-column: auto; }
-            .banner-image, .banner-placeholder { height: 180px; }
-        }
-    </style>
 </head>
 <body>
     <button class="sidebar-toggle-float" id="sidebarToggleFloat" aria-label="Open sidebar">
@@ -256,18 +27,26 @@
             <div class="brand-mark"></div>
             <span class="brand-name">Quantifying the Economic Impacts of Sea Level Rise</span>
         </div>
-        <button class="nav-btn" onclick="window.location.href='index.html'">
+        <button class="nav-btn active" onclick="window.location.href='index.html'">
             <svg viewBox="0 0 24 24" class="icon">
                 <path d="M3 12l9-8 9 8v8a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5H9v5a1 1 0 0 1-1 1H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Introduction</span>
+            <span>Abstract</span>
+        </button>
+        <button class="nav-btn" onclick="window.location.href='background.html'">
+            <svg viewBox="0 0 24 24" class="icon">
+                <ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>Background</span>
         </button>
         <button class="nav-btn" onclick="window.location.href='method.html'">
             <svg viewBox="0 0 24 24" class="icon">
                 <path d="M9 3v6l-4 8h14l-4-8V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <line x1="9" y1="3" x2="9" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <span>Data & Methodology</span>
+            <span>Data & Methods</span>
         </button>
         <button class="nav-btn" onclick="window.location.href='results.html'">
             <svg viewBox="0 0 24 24" class="icon">
@@ -289,115 +68,20 @@
             <span>Conclusion</span>
         </button>
         <div class="nav-spacer"></div>
-        <button class="nav-btn active" onclick="window.location.href='aboutus.html'">
+        <button class="nav-btn" onclick="window.location.href='aboutus.html'">
             <svg viewBox="0 0 24 24" class="icon">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>About Us</span>
+            <span>About the Project</span>
         </button>
     </nav>
-
     <div class="page">
         <div class="app">
-
-            <!-- Hero -->
-            <div class="intro-hero">
-                <div class="intro-hero-label">HDSI Senior Capstone · Group B05-1</div>
-                <h1>Quantifying the Economic Impacts of Sea Level Rise</h1>
-            </div>
-
-            <div class="intro-body">
-
-                <!-- Motivation -->
-                <div>
-                    <div class="section-label">Motivation</div>
-                    <div class="section-title">Why does this matter?</div>
-                    <div class="prose">
-                        <p>Rising seas levels represent one of the most consequential, and often overlooked, threats posed by climate change. They have the potential to not only cause widespread infrastructure damage and cost the world trillions in economic losses, but also displace billions of people globally.
-                    This project develops an econometric framework to estimate the estimated monetary costs globally under a range of IPCC SSP scenarios in the year 2100.</p>
-                    </div>
-                </div>
-
-                <!-- Callout -->
-                <div class="callout">
-                    <b><p>Currently, over 2 billion people live within 100 kilometers of the coast, and roughly 1 billion live within just 10 kilometers.</p></b>
-                </div>
-
-                <!-- Banner image — replace src with your real image path -->
-                <img
-                    src="images/rslr.jpg"
-                    alt="Coastal flooding aerial view"
-                    class="banner-image"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                >
-                <div class="banner-placeholder" style="display:none;">banner image</div>
-
-                <div>
-                    <div class="section-label">Introductory Information</div>
-                    <div class="section-title">What is Happening and Why Should We Care?</div>
-                    <div class="prose">
-                        <p>Human greenhouse gas (GHG) emissions have been accelerating global
-                            sea level rise. Global sea levels have risen approximately 0.2 m since 1900, with a significant portion
-                            occurring recently: annual sea-level rise has increased from 1.3 mm yr be-
-                            tween 1901-1971 to 3.7 mm yr between 2006-2018.</p>
-                            <br>
-                        <p>The economic impacts of sea level rise are projected to be severe.
-                            By 2100, under a high-emissions scenario (SSP5-8.5), global damages could
-                            reach $14 trillion annually, with the United States alone facing up to $1.4
-                            trillion in yearly losses. These costs stem from increased flooding, property
-                            damage, and infrastructure loss, disproportionately affecting vulnerable com-
-                            munities and exacerbating existing inequalities. It is a reasonable assumption that eliminat-
-                            ing GHG emissions will stop any sea-level rise and its detrimental impacts on
-                            mankind. However, limiting global warming from here on out does not nec-
-                            essarily mean climate components with longer timescales of response will not
-                            continue to change. As mentioned in the 2023 UN Intergovernmental Panel
-                            on Climate Change (IPCC) Synthesis Report, "Sea level rise is unavoidable
-                            for centuries to millennia due to continuing deep ocean warming and ice sheet
-                            melt, and sea levels will remain elevated for thousands of years". Not
-                            all hope is lost, as reduced GHG emissions should limit sea level rise and
-                            its acceleration. </p>
-                            <br>
-                            <p>It should be possible to control the impacts
-                            of sea-level rise. Because of its detrimental impacts on coastal communities
-                            and its variability across different SSPs, we hope to quantify sea-level rise along four different Shared Socioeconomic Pathways
-                            created by the IPCC and their associated economic costs. These figures provide government
-                            officials and policymakers with accurate estimates of sea level rise impacts
-                            to base new adaptation strategies, laws, and resource allocations as necessary.</p>
-                    </div>
-                </div>
-
-                <!-- Research questions -->
-                <div>
-                    <div class="section-label">Research Questions</div>
-                    <div class="section-title">What we set out to answer</div>
-                    <div class="prose">
-                        <p><strong style="color: var(--accent);">RQ1:</strong> Along the different Shared Socioeconomic Pathways, how much can sea level rise can we expect?</p>
-                        <p><strong style="color: var(--accent);">RQ2:</strong> What are the predicted economic costs for each analyzed Shared Socioeconomic Pathways in the year 2100?</p>
-                    </div>
-                </div>
-
-            </div>
+          <h1>Write Within Here</h1>
         </div>
     </div>
-
-    <script>
-        const accent  = '#235b5c';
-        const purple  = '#6f4986';
-        const muted   = '#4f6b76';
-        const light   = 'rgba(35,54,66,0.08)';
-
-        const defaultOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: muted, font: { size: 12 } } } },
-            scales: {
-                x: { grid: { color: light }, ticks: { color: muted, font: { size: 11 } } },
-                y: { grid: { color: light }, ticks: { color: muted, font: { size: 11 } } }
-            }
-        };
-    </script>
 </body>
 </html>
