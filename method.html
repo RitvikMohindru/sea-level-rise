@@ -3,9 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Connect</title>
+    <title>Data & Methodology — Quantifying the Economic Impacts of Sea Level Rise</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        .page-hero {
+            padding: 48px 40px 36px;
+            border-bottom: 1px solid rgba(35, 54, 66, 0.08);
+            background: linear-gradient(135deg, rgba(44, 111, 106, 0.06), rgba(111, 73, 134, 0.06));
+        }
+        .page-hero-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .page-hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            max-width: 720px;
+        }
+        .page-hero p {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 680px;
+        }
+
+        .page-body {
+            padding: 40px 40px 56px;
+            display: grid;
+            gap: 56px;
+            min-width: 0;
+        }
+
+        /* Divider between major sections */
+        .section-divider {
+            border: none;
+            border-top: 2px solid rgba(35, 54, 66, 0.08);
+            margin: 0;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 14px;
+            letter-spacing: -0.3px;
+        }
+        .prose {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 780px;
+        }
+        .prose p + p { margin-top: 14px; }
+
+        /* ── DATASET CARDS ── */
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .dataset-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .dataset-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+        .dataset-card-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #2c6f6a, #6f4986);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .dataset-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.15);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+        .dataset-icon svg { width: 18px; height: 18px; color: #fff; }
+        .dataset-card-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .dataset-card-source { font-size: 11px; color: rgba(255,255,255,0.7); }
+        .dataset-card-body { padding: 16px 20px; }
+        .dataset-card-body p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+        .dataset-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .dataset-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(35, 91, 92, 0.08);
+            border-radius: 999px;
+            padding: 3px 10px;
+        }
+
+        /* ── DATA TABLE ── */
+        .table-wrapper {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .data-table thead tr {
+            background: linear-gradient(135deg, rgba(44,111,106,0.08), rgba(111,73,134,0.08));
+        }
+        .data-table th {
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(35,54,66,0.08);
+            white-space: nowrap;
+        }
+        .data-table td {
+            padding: 13px 20px;
+            color: var(--text);
+            border-bottom: 1px solid rgba(35,54,66,0.05);
+            vertical-align: top;
+        }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover td { background: rgba(35,91,92,0.03); }
+        .td-muted { color: var(--muted) !important; font-size: 12px; }
+        .td-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(35,91,92,0.1);
+            color: var(--accent);
+        }
+        .td-badge.purple {
+            background: rgba(111,73,134,0.1);
+            color: var(--accent-2);
+        }
+
+        /* ── CHART CARDS ── */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+        .chart-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .chart-card.full-width { grid-column: 1 / -1; }
+        .chart-card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .chart-card-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+        .chart-container { position: relative; height: 240px; }
+
+        /* ── PIPELINE STEPS ── */
+        .pipeline {
+            display: grid;
+            gap: 0;
+            margin-top: 24px;
+        }
+        .pipeline-step {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+        .pipeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 44px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: linear-gradient(to bottom, var(--accent), rgba(111,73,134,0.3));
+        }
+        .pipeline-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c6f6a, #6f4986);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(35,91,92,0.3);
+            z-index: 1;
+        }
+        .pipeline-content {
+            background: #fff;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(35,54,66,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        .pipeline-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .pipeline-content p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ── MODEL CARDS ── */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .model-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(35,54,66,0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            padding: 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .model-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+        .model-card-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #2c6f6a, #6f4986);
+            border-radius: 999px;
+            padding: 4px 12px;
+            margin-bottom: 14px;
+        }
+        .model-card h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+        .model-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ── EQUATION BLOCK ── */
+        .equation-block {
+            background: #fff;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(35,54,66,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 24px 28px;
+            margin-top: 24px;
+            overflow-x: auto;
+        }
+        .equation-block .eq-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .equation-block .eq-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        .equation-block .eq-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .page-hero { padding: 32px 20px 28px; }
+            .page-hero h1 { font-size: 24px; }
+            .page-body { padding: 28px 20px 40px; gap: 40px; }
+            .chart-grid { grid-template-columns: 1fr; }
+            .chart-card.full-width { grid-column: auto; }
+            .data-table th, .data-table td { padding: 10px 12px; }
+        }
+    </style>
 </head>
 <body>
     <button class="sidebar-toggle-float" id="sidebarToggleFloat" aria-label="Open sidebar">
@@ -16,7 +343,7 @@
         </svg>
     </button>
     <nav class="side-nav" id="sideNav">
-        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" >
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
             <svg viewBox="0 0 24 24" class="icon">
                 <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -25,28 +352,20 @@
         </button>
         <div class="brand">
             <div class="brand-mark"></div>
-            <span class="brand-name">Quantifying Economic Impacts of SLR</span>
+            <span class="brand-name">Quantifying the Economic Impacts of Sea Level Rise</span>
         </div>
         <button class="nav-btn" onclick="window.location.href='index.html'">
             <svg viewBox="0 0 24 24" class="icon">
                 <path d="M3 12l9-8 9 8v8a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5H9v5a1 1 0 0 1-1 1H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Home</span>
-        </button>
-        <button class="nav-btn" onclick="window.location.href='data.html'">
-            <svg viewBox="0 0 24 24" class="icon">
-                <ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
-                <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" fill="none" stroke="currentColor" stroke-width="2"/>
-                <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" fill="none" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            <span>Data</span>
+            <span>Introduction</span>
         </button>
         <button class="nav-btn active" onclick="window.location.href='method.html'">
             <svg viewBox="0 0 24 24" class="icon">
                 <path d="M9 3v6l-4 8h14l-4-8V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <line x1="9" y1="3" x2="9" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <span>Method</span>
+            <span>Data & Methodology</span>
         </button>
         <button class="nav-btn" onclick="window.location.href='results.html'">
             <svg viewBox="0 0 24 24" class="icon">
@@ -67,7 +386,6 @@
             </svg>
             <span>Conclusion</span>
         </button>
-
         <div class="nav-spacer"></div>
         <button class="nav-btn" onclick="window.location.href='aboutus.html'">
             <svg viewBox="0 0 24 24" class="icon">
@@ -79,10 +397,101 @@
             <span>About Us</span>
         </button>
     </nav>
+
     <div class="page">
         <div class="app">
-          <h1>Write Within Here</h1>
-        </div>
-    </div>
+
+            <!-- ── HERO ── -->
+            <div class="page-hero">
+                <div class="page-hero-label">HDSI Senior Capstone · Group B05-1</div>
+                <h1>Data &amp; Methodology</h1>
+                <p>A walkthrough of the datasets used to model sea level rise, and the analytical pipeline we built to translate physical projections into economic damage estimates.</p>
+            </div>
+
+            <div class="page-body">
+
+                <!-- ══════════════════════════════════
+                     SECTION 1 — DATASETS
+                ══════════════════════════════════ -->
+                <div>
+                    <div class="section-label">Section 00 — Methodology Pipeline</div>
+                    <div class="section-title">Process Flowchart</div>
+                    <div class="prose">
+                        <p>Our analysis draws on a multi-step process that incorporates several different datasets and several different models. This page aims to explain the thought behind our methodology choices: why did we use the models we chose and how did it help us answer our research questions?</p>
+                    </div>
+
+                    <div class="pipeline">
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot">1</div>
+                            <div class="pipeline-content">
+                                <h4>Intial Emissions Data & the TAS Random Forest Model</h4>
+                                <p>Our first step, taking in emission data in order to produce surface air temperature projections for 2015-2100</p>
+                            </div>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot">2</div>
+                            <div class="pipeline-content">
+                                <h4>The BRICK Model</h4>
+                                <p>We used a climate model to predict regional sea level rise across the globe under each SSP scenario.</p>
+                            </div>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot">3</div>
+                            <div class="pipeline-content">
+                                <h4>The PyCIAM Model</h4>
+                                <p>We used a model that quantifies the economic impacts of sea level rise at each SSP scenario.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="overflow: hidden; min-width: 0;">
+                    <div class="section-label">Section 01 — Intial Emissions Data </div>
+                    <div class="section-title">The TAS Random Forest Model</div>
+
+                    <div class="prose">
+                        <p>The first step of our project was to generate surface air temperature
+                            projection data for each considered year (2015-2100) along each pathway. In
+                            quarter one of the capstone, we already generated this data for each pathway
+                            using a random forest regression model taking in global mean emissions of
+                            Carbon Dioxide, Sulfur Dioxide, Methane, and Black Carbon. We then converted
+                            this data, which was stored in .nc files, into .csv files for future ease
+                            of access and use. For each pathway, there's one file, containing the global mean of the 
+                            surface air temperature and the associated year, spanning from 2015, our base year, to our final goal year of 2100. 
+                        </p>
+                    </div>
+                </div>
+
+                <div style="overflow: hidden; min-width: 0;">
+                    <div class="section-label">Section 02 — The Brick Model </div>
+                    <div class="section-title">Projecting Sea Level Rise</div>
+
+                    <div class="prose">
+                        <p>To project sea level rise, we used the BRICK (Building blocks for Relevant Ice and Climate Knowledge) model, chosen for its modularity and compatibility with our input data. BRICK decomposes global sea level rise into four physical components: thermosteric (thermal) expansion, glaciers and small ice caps, the Greenland Ice Sheet, and the Antarctic Ice Sheet, each modeled separately based on surface air temperature projections.</p>
+                        <br>
+                        <p>Since sea level rise is not spatially uniform, we applied sea level fingerprints to translate global component contributions into regional projections. These fingerprints capture the gravitational, rotational, and deformational effects of ice mass redistribution; for example, regions near melting ice sheets can experience local sea level fall, while far-field regions see amplified rise. Thermosteric expansion is treated as spatially uniform.</p>
+                        <br>
+                        <p>We ran this pipeline independently for each of our four SSP scenarios (SSP1-2.6, SSP2-4.5, SSP3-7.0, SSP5-8.5), feeding temperature time series into each BRICK component and applying the appropriate fingerprints to produce annual regional sea level projections from 2015 to 2100. These gridded outputs then serve as the primary physical input for our economic damage estimation. Each of the four datasets is indexed by latitude, longitude, and year, containing 5,508,000 points of data. Graphically, it looks like:</p></div>
+                    <img
+                        src="../images/245.png"
+                        alt="Regional Sea-Level Rise SSP2-4.5 (2015-2100)"
+                        style="width: 100%; max-width: 100%; height: auto; display: block; margin-top: 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.08);"
+                        onerror="this.style.display='none';"
+                    >                    
+                    
+                    </div>
+
+                <div style="overflow: hidden; min-width: 0;">
+                    <div class="section-label">Section 03 — The PyCIAM Model </div>
+                    <div class="section-title">Projecting the Economic Costs of Sea Level Rise</div>
+
+                    <div class="prose">
+                        <p>To estimate economic damages, we used the Data-Spatial Climate Impact Model (DSCIM) platform, an open-source framework that combines spatial and economic data to quantify the consequences of sea level rise. It consists of two main inputs and one core model: the SLIIDERS dataset, our BRICK sea level projections, and the pyCIAM model.</p>
+                        <br>
+                        <p>SLIIDERS (Sea Level Impacts Input Dataset by Elevation, Region, and Scenario) provides the foundational data for each coastal segment globally. It includes physical attributes such as inundation areas, extreme sea level heights, and wetland coverage, as well as socioeconomic variables like population, GDP, and capital stock. We supplemented this with our BRICK sea level projections by matching SSP scenarios and geographic coordinates, imputing missing values from the nearest available location.</p>
+                        <br>
+                        <p>The pyCIAM model processes these inputs to determine the most economically efficient response for each coastal segment under rising seas. It outputs six cost categories: permanent inundation, storm damage to capital, mortality, coastal protection expenditures, relocation costs, and wetland loss. The model evaluates three adaptation strategies: reactive retreat (relocating people and capital after land falls below sea level), coastal protection (building infrastructure scaled to projected sea level rise), and proactive retreat (preemptive relocation based on future sea level projections). Costs are computed across multi-decade planning periods, with adaptation decisions updated based on the maximum projected sea level in each period.</p>
+                                            </div>
+                </div>
 </body>
 </html>
