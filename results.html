@@ -3,9 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Connect</title>
+    <title>Results — Quantifying the Economic Impacts of Sea Level Rise</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        .page-hero {
+            padding: 48px 40px 36px;
+            border-bottom: 1px solid rgba(35, 54, 66, 0.08);
+            background: linear-gradient(135deg, rgba(44, 111, 106, 0.06), rgba(111, 73, 134, 0.06));
+        }
+        .page-hero-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .page-hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            max-width: 720px;
+        }
+        .page-hero p {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 680px;
+        }
+
+        .page-body {
+            padding: 40px 40px 56px;
+            display: grid;
+            gap: 56px;
+            min-width: 0;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 2px solid rgba(35, 54, 66, 0.08);
+            margin: 0;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 14px;
+            letter-spacing: -0.3px;
+        }
+        .prose {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 780px;
+        }
+        .prose p + p { margin-top: 14px; }
+
+        /* ── STAT ROW ── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        .stat-value.accent { color: var(--accent); }
+        .stat-value.purple { color: var(--accent-2); }
+        .stat-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ── CHART CARDS ── */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+        .chart-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            min-width: 0;
+        }
+        .chart-card.full-width { grid-column: 1 / -1; }
+        .chart-card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .chart-card-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+        .chart-container { position: relative; height: 260px; }
+        .chart-container.tall { height: 320px; }
+
+        /* ── IMAGE CARD ── */
+        .figure-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(35, 54, 66, 0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-top: 24px;
+        }
+        .figure-card img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .figure-caption {
+            padding: 12px 20px;
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid rgba(35,54,66,0.06);
+            font-style: italic;
+        }
+
+        /* ── CALLOUT ── */
+        .callout {
+            background: linear-gradient(135deg, rgba(44, 111, 106, 0.08), rgba(111, 73, 134, 0.08));
+            border-left: 4px solid var(--accent);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 20px 24px;
+        }
+        .callout p {
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.7;
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* ── SSP SCENARIO BADGES ── */
+        .ssp-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .ssp-badge {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(35,54,66,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            padding: 14px 20px;
+            min-width: 140px;
+        }
+        .ssp-badge-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .ssp-badge-value {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+        .ssp-badge-value.s1 { color: #235b5c; }
+        .ssp-badge-value.s2 { color: #4a8f8a; }
+        .ssp-badge-value.s3 { color: #6f4986; }
+        .ssp-badge-value.s4 { color: #9b6abf; }
+        .ssp-badge-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .page-hero { padding: 32px 20px 28px; }
+            .page-hero h1 { font-size: 24px; }
+            .page-body { padding: 28px 20px 40px; gap: 40px; }
+            .chart-grid { grid-template-columns: 1fr; }
+            .chart-card.full-width { grid-column: auto; }
+            .stat-row { grid-template-columns: 1fr 1fr; }
+            .ssp-row { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
     <button class="sidebar-toggle-float" id="sidebarToggleFloat" aria-label="Open sidebar">
@@ -78,136 +290,255 @@
             <span>About the Project</span>
         </button>
     </nav>
+
     <div class="page">
         <div class="app">
-            <div class="hero">
+
+            <!-- ── HERO ── -->
+            <div class="page-hero">
+                <div class="page-hero-label">HDSI Senior Capstone · Group B05-1</div>
                 <h1>Results</h1>
-                <p>
-                    This section presents our projected sea level rise outcomes, estimated economic damages across SSP scenarios, and the differences between best-case and worst-case futures.
-                </p>
+                <p>Our findings across two dimensions: the projected physical sea level rise under each SSP scenario, and the estimated global economic costs associated with those projections.</p>
             </div>
 
             <div class="page-body">
 
-                <div>
-                    <div class="section-label">Section 01 — Sea Level Rise Projections</div>
-                    <div class="section-title">How much sea level rise do we project?</div>
-
+                <!-- ══════════════════════════════════
+                     SECTION 1 — SEA LEVEL RISE RESULTS
+                ══════════════════════════════════ -->
+                <div style="min-width: 0;">
+                    <div class="section-label">Section 01 — Sea Level Rise</div>
+                    <div class="section-title">Projected Global Sea Level Rise by Scenario</div>
                     <div class="prose">
-                        <p>
-                            Our first set of results shows projected sea level rise under the four SSP scenarios. As expected, higher-emissions pathways generally produce greater sea level rise by 2100. These projections provide the physical foundation for the economic damage estimates that follow.
-                        </p>
+                        <p>Using the BRICK model, we generated annual regional sea level projections from 2015 to 2100 under each SSP scenario. As expected, higher-emissions pathways produce significantly greater sea level rise, with divergence between scenarios becoming pronounced after mid-century. Note that under any scenario, a certain amount of sea level rise is to be expected, and even "locked-in". Actions that we take now don't undo our prior negligence, so a certain level of rise is inevitable.</p>
                     </div>
 
+                    <!-- Per-scenario summary badges -->
+                    <div class="ssp-row">
+                        <div class="ssp-badge">
+                            <div class="ssp-badge-label">SSP1-2.6</div>
+                            <div class="ssp-badge-value s1">0.48 m</div>
+                            <div class="ssp-badge-note">Mean Global SLR Rise · 2100</div>
+                        </div>
+                        <div class="ssp-badge">
+                            <div class="ssp-badge-label">SSP2-4.5</div>
+                            <div class="ssp-badge-value s2">0.51 m</div>
+                            <div class="ssp-badge-note">Mean Global SLR Rise · 2100</div>
+                        </div>
+                        <div class="ssp-badge">
+                            <div class="ssp-badge-label">SSP3-7.0</div>
+                            <div class="ssp-badge-value s3">0.54 m</div>
+                            <div class="ssp-badge-note">Mean Global SLR Rise · 2100</div>
+                        </div>
+                        <div class="ssp-badge">
+                            <div class="ssp-badge-label">SSP5-8.5</div>
+                            <div class="ssp-badge-value s4">0.58 m</div>
+                            <div class="ssp-badge-note">Mean Global SLR Rise · 2100</div>
+                        </div>
+                    </div>
+
+                    <!-- SLR charts -->
                     <div class="chart-grid">
-                        <div class="chart-card">
-                            <div class="chart-card-title">Global Mean Sea Level Rise by SSP</div>
-                            <div class="chart-card-sub">Insert bar chart or line chart here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 1 goes here -->
-                            </div>
-                        </div>
-
-                        <div class="chart-card">
-                            <div class="chart-card-title">Regional Sea Level Rise Comparison</div>
-                            <div class="chart-card-sub">Insert comparison figure here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 2 goes here -->
-                            </div>
-                        </div>
-
                         <div class="chart-card full-width">
-                            <div class="chart-card-title">Spatial Distribution of Sea Level Rise</div>
-                            <div class="chart-card-sub">Insert world map here</div>
+                            <div class="chart-card-title">Global Mean Sea Level Rise Over Time</div>
+                            <div class="chart-card-sub">Annual projections (m) relative to 2015 baseline, all four SSP scenarios</div>
                             <div class="chart-container tall">
-                                <!-- Graph 3 goes here -->
+                                <canvas id="slrLineChart"></canvas>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="section-label">Section 02 — Economic Damages</div>
-                    <div class="section-title">How do projected costs vary by scenario?</div>
 
+                <hr class="section-divider">
+
+                <!-- ══════════════════════════════════
+                     SECTION 2 — ECONOMIC COST RESULTS
+                ══════════════════════════════════ -->
+                <div style="min-width: 0;">
+                    <div class="section-label">Section 02 — Economic Costs</div>
+                    <div class="section-title">Projected Global Economic Damages by Scenario</div>
                     <div class="prose">
-                        <p>
-                            The second set of results translates projected sea level rise into economic damages. These estimates capture how the cost burden changes across SSP pathways and demonstrate how much more expensive higher-emissions futures can become by the end of the century.
-                        </p>
+                        <p>Using the pyCIAM model with our BRICK sea level projections and the SLIIDERS coastal dataset, we estimated total global economic damages for each SSP scenario in 2100. Costs span six categories: permanent inundation, storm damage, mortality, protection expenditures, relocation, and wetland loss.</p>
                     </div>
 
+                    <!-- Key cost stats -->
+                    <div class="stat-row">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Cost · SSP1-2.6</div>
+                            <div class="stat-value accent">$X.X T</div>
+                            <div class="stat-note">Annual damages · 2100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Cost · SSP2-4.5</div>
+                            <div class="stat-value accent">$X.X T</div>
+                            <div class="stat-note">Annual damages · 2100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Cost · SSP3-7.0</div>
+                            <div class="stat-value purple">$X.X T</div>
+                            <div class="stat-note">Annual damages · 2100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Cost · SSP5-8.5</div>
+                            <div class="stat-value purple">$X.X T</div>
+                            <div class="stat-note">Annual damages · 2100</div>
+                        </div>
+                    </div>
+
+                    <!-- Economic cost charts -->
                     <div class="chart-grid">
-                        <div class="chart-card">
-                            <div class="chart-card-title">Total Economic Cost by SSP</div>
-                            <div class="chart-card-sub">Insert bar chart here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 4 goes here -->
-                            </div>
-                        </div>
-
-                        <div class="chart-card">
-                            <div class="chart-card-title">Sea Level Rise vs. Total Cost</div>
-                            <div class="chart-card-sub">Insert dual-axis or comparison chart here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 5 goes here -->
-                            </div>
-                        </div>
-
                         <div class="chart-card full-width">
-                            <div class="chart-card-title">Regional Distribution of Economic Damages</div>
-                            <div class="chart-card-sub">Insert world damage map here</div>
+                            <div class="chart-card-title">Total Economic Damages by SSP Scenario</div>
+                            <div class="chart-card-sub">Cumulative global costs ($T) broken down by cost category</div>
                             <div class="chart-container tall">
-                                <!-- Graph 6 goes here -->
+                                <canvas id="costStackedChart"></canvas>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="callout">
-                    <p>
-                        Across our results, both sea level rise and total damages increase substantially under more severe emissions pathways, highlighting the long-term economic consequences of delayed climate action.
-                    </p>
-                </div>
-
-                <div>
-                    <div class="section-label">Section 03 — Best-Case vs. Worst-Case Comparison</div>
-                    <div class="section-title">How different are optimal and worst-case futures?</div>
-
-                    <div class="prose">
-                        <p>
-                            To better illustrate the stakes, we compare an optimal scenario against a worst-case scenario. This highlights the magnitude of avoided damages under lower-emissions and more effective adaptation pathways, and it emphasizes how strongly policy and planning choices affect future outcomes.
-                        </p>
-                    </div>
-
-                    <div class="chart-grid">
                         <div class="chart-card">
-                            <div class="chart-card-title">Optimal vs. Worst-Case Total Cost</div>
-                            <div class="chart-card-sub">Insert comparison chart here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 7 goes here -->
+                            <div class="chart-card-title">Cost Breakdown by Category</div>
+                            <div class="chart-card-sub">Share of total damages per cost type · SSP5-8.5</div>
+                            <div class="chart-container">
+                                <canvas id="costPieChart"></canvas>
                             </div>
                         </div>
-
                         <div class="chart-card">
-                            <div class="chart-card-title">Difference in Global Mean Sea Level Rise</div>
-                            <div class="chart-card-sub">Insert comparison figure here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 8 goes here -->
-                            </div>
-                        </div>
-
-                        <div class="chart-card full-width">
-                            <div class="chart-card-title">Cost Difference Map: Worst-Case vs. Optimal</div>
-                            <div class="chart-card-sub">Insert final world map here</div>
-                            <div class="chart-container tall">
-                                <!-- Graph 9 goes here -->
+                            <div class="chart-card-title">Damages by World Region</div>
+                            <div class="chart-card-sub">Total projected costs ($B) per region · 2100</div>
+                            <div class="chart-container">
+                                <canvas id="costRegionChart"></canvas>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Callout -->
+                    <div class="callout" style="margin-top: 32px;">
+                        <p>Replace this with your most striking finding — e.g. "Under SSP5-8.5, global annual damages reach $X trillion by 2100, with X% of costs concentrated in just X coastal nations."</p>
+                    </div>
+
+                    <div class="prose" style="margin-top: 24px;">
+                        <p>Replace this paragraph with your interpretation of the economic results. Discuss which regions or cost categories dominate, how costs scale across scenarios, and any unexpected findings such as non-monotonic cost ordering between scenarios.</p>
+                        <p>If your SSP3-7.0 results show lower costs than SSP2-4.5, this section is a good place to discuss the potential reasons — whether driven by adaptation strategy switching, data coverage differences, or model behavior — and contextualize it relative to the literature.</p>
+                    </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
+            </div><!-- end page-body -->
+        </div><!-- end app -->
+    </div><!-- end page -->
+
+    <script>
+        const accent = '#235b5c';
+        const teal   = '#4a8f8a';
+        const purple = '#6f4986';
+        const lilac  = '#9b6abf';
+        const muted  = '#4f6b76';
+        const light  = 'rgba(35,54,66,0.08)';
+
+        const baseOpts = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: muted, font: { size: 12 } } } },
+            scales: {
+                x: { grid: { color: light }, ticks: { color: muted, font: { size: 11 } } },
+                y: { grid: { color: light }, ticks: { color: muted, font: { size: 11 } } }
+            }
+        };
+
+        // SLR line chart — all 4 SSPs over time
+        new Chart(document.getElementById('slrLineChart'), {
+            type: 'line',
+            data: {
+                labels: ['2020','2030','2040','2050','2060','2070','2080','2090','2100'],
+                datasets: [
+                    { label: 'SSP1-2.6', data: [0.03, 0.08, 0.14, 0.20, 0.26, 0.31, 0.37, 0.43, 0.48], borderColor: accent, backgroundColor: 'transparent', tension: 0.4, pointRadius: 2 },
+                    { label: 'SSP2-4.5', data: [0.03, 0.08, 0.14, 0.20, 0.26, 0.32, 0.38, 0.45, 0.51], borderColor: teal,   backgroundColor: 'transparent', tension: 0.4, pointRadius: 2 },
+                    { label: 'SSP3-7.0', data: [0.03, 0.08, 0.14, 0.20, 0.26, 0.33, 0.39, 0.46, 0.54], borderColor: purple, backgroundColor: 'transparent', tension: 0.4, pointRadius: 2 },
+                    { label: 'SSP5-8.5', data: [0.03, 0.08, 0.14, 0.20, 0.27, 0.34, 0.41, 0.50, 0.58], borderColor: lilac,  backgroundColor: 'transparent', tension: 0.4, pointRadius: 2 },
+                ]
+            },
+            options: { ...baseOpts, scales: { ...baseOpts.scales, y: { ...baseOpts.scales.y, title: { display: true, text: 'Sea level rise (m)', color: muted, font: { size: 11 } } } } }
+        });
+
+        // SLR bar chart — 2100 values
+        new Chart(document.getElementById('slrBarChart'), {
+            type: 'bar',
+            data: {
+                labels: ['SSP1-2.6', 'SSP2-4.5', 'SSP3-7.0', 'SSP5-8.5'],
+                datasets: [{
+                    label: 'SLR (m)',
+                    data: [0.35, 0.56, 0.82, 1.14],
+                    backgroundColor: ['rgba(35,91,92,0.8)', 'rgba(74,143,138,0.8)', 'rgba(111,73,134,0.8)', 'rgba(155,106,191,0.8)'],
+                    borderRadius: 6,
+                    borderSkipped: false
+                }]
+            },
+            options: { ...baseOpts, plugins: { legend: { display: false } } }
+        });
+
+        // SLR distribution (dummy)
+        new Chart(document.getElementById('slrDistChart'), {
+            type: 'bar',
+            data: {
+                labels: ['<0', '0–0.2', '0.2–0.4', '0.4–0.6', '0.6–0.8', '0.8–1.0', '>1.0'],
+                datasets: [
+                    { label: 'SSP2-4.5', data: [12, 18, 35, 22, 9, 3, 1], backgroundColor: 'rgba(74,143,138,0.7)', borderRadius: 4 },
+                    { label: 'SSP5-8.5', data: [8, 10, 20, 28, 20, 10, 4], backgroundColor: 'rgba(155,106,191,0.7)', borderRadius: 4 },
+                ]
+            },
+            options: { ...baseOpts, scales: { ...baseOpts.scales, x: { ...baseOpts.scales.x, title: { display: true, text: 'SLR (m)', color: muted, font: { size: 11 } } } } }
+        });
+
+        // Economic cost stacked bar
+        new Chart(document.getElementById('costStackedChart'), {
+            type: 'bar',
+            data: {
+                labels: ['SSP1-2.6', 'SSP2-4.5', 'SSP3-7.0', 'SSP5-8.5'],
+                datasets: [
+                    { label: 'Inundation',   data: [1.2, 2.1, 1.8, 3.4], backgroundColor: 'rgba(35,91,92,0.8)',   borderRadius: 0 },
+                    { label: 'Storm Damage', data: [0.8, 1.4, 1.2, 2.2], backgroundColor: 'rgba(74,143,138,0.8)', borderRadius: 0 },
+                    { label: 'Protection',   data: [0.5, 0.9, 0.7, 1.5], backgroundColor: 'rgba(111,73,134,0.8)', borderRadius: 0 },
+                    { label: 'Relocation',   data: [0.3, 0.6, 0.5, 1.0], backgroundColor: 'rgba(155,106,191,0.8)',borderRadius: 0 },
+                    { label: 'Wetland Loss', data: [0.2, 0.4, 0.3, 0.7], backgroundColor: 'rgba(79,107,118,0.6)', borderRadius: 0 },
+                ]
+            },
+            options: {
+                ...baseOpts,
+                scales: {
+                    x: { ...baseOpts.scales.x, stacked: true },
+                    y: { ...baseOpts.scales.y, stacked: true, title: { display: true, text: 'Cost ($T)', color: muted, font: { size: 11 } } }
+                }
+            }
+        });
+
+        // Cost breakdown pie
+        new Chart(document.getElementById('costPieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Inundation', 'Storm Damage', 'Protection', 'Relocation', 'Wetland Loss', 'Mortality'],
+                datasets: [{
+                    data: [38, 25, 17, 11, 6, 3],
+                    backgroundColor: ['rgba(35,91,92,0.85)','rgba(74,143,138,0.85)','rgba(111,73,134,0.85)','rgba(155,106,191,0.85)','rgba(79,107,118,0.7)','rgba(200,180,220,0.8)'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: muted, font: { size: 11 } } } } }
+        });
+
+        // Regional cost bar
+        new Chart(document.getElementById('costRegionChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Asia-Pacific', 'Americas', 'Europe', 'Africa', 'Middle East'],
+                datasets: [{
+                    label: 'Cost ($B)',
+                    data: [3800, 2100, 1400, 900, 600],
+                    backgroundColor: ['rgba(35,91,92,0.8)','rgba(74,143,138,0.8)','rgba(111,73,134,0.8)','rgba(155,106,191,0.8)','rgba(79,107,118,0.7)'],
+                    borderRadius: 6,
+                    borderSkipped: false
+                }]
+            },
+            options: { ...baseOpts, indexAxis: 'y', plugins: { legend: { display: false } } }
+        });
+    </script>
 </body>
 </html>
