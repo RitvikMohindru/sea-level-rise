@@ -705,6 +705,11 @@ body {
         opacity: 1;
     }
 
+    .side-nav .nav-spacer {
+        flex: 0 0 24px;
+        min-height: 24px;
+    }
+
     body::before {
         content: '';
         position: fixed;
