@@ -83,44 +83,49 @@
             <div class="hero">
                 <h1>Conclusion</h1>
                 <p>
-                    Our results highlight the long-term economic significance of sea level rise and reinforce the importance of both climate mitigation and adaptation in reducing future damages.
+                    Model evaluation, economic implications of sea level rise, and potential strategies for mitigation and adaptation.
                 </p>
             </div>
 
             <div class="page-body">
 
                 <div>
-                    <div class="section-label">Section 01 — Implications</div>
-                    <div class="section-title">Why these results matter</div>
+                    <div class="section-label">Section 01 — Model Evaluation</div>
+                    <div class="section-title">How well did our model perform?</div>
 
                     <div class="prose">
                         <p>
-                            This project shows that sea level rise is not only an environmental problem, but also a substantial economic issue. Across all scenarios, rising sea levels create measurable costs through flooding, land loss, infrastructure damage, and adaptation expenses. These damages increase substantially under higher-emissions pathways, showing that future economic outcomes depend strongly on today’s climate decisions.
+                            The BRICK model was evaluated against NASA’s decade-by-decade projections for
+                            global sea level rise which they obtained from a model from the Intergovernmental Panel for Climate Change.
+                            The evaluation metrics used were Mean Bias Error (MBE) and Root-Mean Squared Error
+                            (RMSE). While RMSE is a standard metric used to determine overall error size, MBE provides both direction and magnitude of error, thus making it useful to determine if the BRICK
+                            model overestimated or underestimated SLR.
                         </p>
                         <br>
-                        <p>
-                            Our results also suggest that the impacts of sea level rise are uneven across space. Some coastal regions face far greater damages than others, meaning that climate risk is not distributed equally. This makes it important to use regional projections and locally informed adaptation strategies rather than relying only on global averages.
-                        </p>
+                        <figure>
+                            <img src="images/model_eval.png" alt="Model Evaluation Graph" class="figure">
+                            <figcaption>Comparison of BRICK and NASA sea-level rise projections across SSP scenarios.</figcaption>
+                        </figure>
                         <br>
                         <p>
-                            More broadly, this work demonstrates the value of connecting physical climate models to socioeconomic models. By linking projected sea level rise to economic damages, we can better understand the stakes of climate change and provide more concrete information for planning and policy.
+                            Through evaluating the BRICK model against NASA’s SLR projections obtained from the IPCC AR6, it was determined that the BRICK model constantly underestimates SLR. This is particularly the case when emissions are greater, as higher SSPs correlate to a greater difference in SLR estimates.                        
+                            Since all the values for MBE are constantly negative, it means that on a decade-to-decade
+                            basis, the values for sea level rise are underestimated in the BRICK model compared to
+                            NASA/IPCC’s model. Additionally, the RMSE increases as emissions increase, indicating
+                            that the BRICK model is less sensitive to higher emissions and underestimations increase as
+                            emissions increase. Overall, the BRICK model underperformed as it under-estimated its predictions for sea level rise and that trend increased for
+                            scenarios predicting increased emissions.
                         </p>
                     </div>
                 </div>
 
-                <div class="callout">
-                    <p>
-                        Even under lower-emissions pathways, some sea level rise remains unavoidable, making adaptation planning essential alongside emissions reductions.
-                    </p>
-                </div>
-
                 <div>
-                    <div class="section-label">Section 02 — What Can We Do About Sea Level Rise?</div>
-                    <div class="section-title">Mitigation and adaptation strategies</div>
+                    <div class="section-label">Section 02 - Implications of Results</div>
+                    <div class="section-title">What impact will sea level rise have?</div>
 
                     <div class="prose">
                         <p>
-                            Responding to sea level rise requires a combination of mitigation and adaptation. Mitigation focuses on reducing greenhouse gas emissions in order to limit the severity of long-term warming and future sea level rise. The lower damages associated with more moderate SSP scenarios in our results reinforce the value of policies that reduce emissions over time.
+                            It can be determined through the results of the BRICK and pyCIAM model's that sea level rise is predicted to have significant economic impacts, particularly in the later decades of the century. The results indicate that under higher emissions scenarios (SSP3-7.0 and SSP5-8.5), the economic damages from sea level rise could reach upwards of 300 trillion dollars by 2100. Even under more moderate scenarios (SSP1-2.6), the costs are still substantial, highlighting the importance of mitigation efforts to reduce greenhouse gas emissions.
                         </p>
                         <br>
                         <p>
@@ -134,8 +139,8 @@
                 </div>
 
                 <div>
-                    <div class="section-label">Section 03 — Stakeholders</div>
-                    <div class="section-title">Who can use these results?</div>
+                    <div class="section-label">Section 03 — What Can We Do About Sea Level Rise?</div>
+                    <div class="section-title">Mitigation and adaptation strategies</div>
 
                     <div class="prose">
                         <p>
