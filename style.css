@@ -925,3 +925,27 @@ img.team-avatar {
 
 .team-name { font-weight: 700; font-size: 18px; color: var(--text); }
 .team-role { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+.about-header {
+    justify-content: center;
+    text-align: center;
+}
+
+.about-title {
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    width: 100%;
+}
+
+.about-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about-body p {
+    font-size: 18px;
+    line-height: 1.7;
+}
